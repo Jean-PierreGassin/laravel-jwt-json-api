@@ -1,0 +1,25 @@
+web:
+  image: nginx:latest
+  ports:
+    - "80:80"
+  volumes:
+    - ./:/app
+    - ./site.conf:/etc/nginx/conf.d/default.conf
+  links:
+    - php
+  environment:
+    DEBUG: 'true'
+
+php:
+  build: ./
+  volumes:
+    - ./:/app
+  links:
+    - db
+
+db:
+  image: mysql:latest
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: 4[TUW7z3>QG9(Yh38,Wjsw
