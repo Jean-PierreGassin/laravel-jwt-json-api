@@ -19,7 +19,7 @@ class UserDetailsController extends ApiController
             return $response;
         }
 
-        $response = $this->apiResponse($user->all()->toArray());
+        $response = $this->apiResponse($user->toArray());
 
         return $response;
     }
