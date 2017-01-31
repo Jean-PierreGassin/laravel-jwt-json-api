@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Api\Controllers\Auth;
 
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\ApiController;
 
-class RegisterController extends Controller
+class RegisterController extends ApiController
 {
     /**
      * Get a validator for an incoming registration request.
@@ -35,11 +34,15 @@ class RegisterController extends Controller
     protected function create(Request $request)
     {
         $validator = $this->validator($request->all());
-        
+
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()]);
+            $validatorErrors = $validator->errors()->all();
+
+            $response = $this->apiErrorResponse($validatorErrors);
+
+            return $response;
         }
-        
+
         try {
             User::create([
                 'name' => $request->name,
@@ -47,9 +50,13 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password),
             ]);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            $response = $this->apiErrorResponse($e->getMessage());
+
+            return $response;
         }
-        
-        return response()->json(['success' => 'User created']);
+
+        $response = $this->apiResponse('User created');
+
+        return $response;
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Api\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
+use App\Api\Controllers\ApiController;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-class VerifyJWTToken
+class VerifyJWTToken extends ApiController
 {
     /**
      * Handle an incoming request.
@@ -21,11 +21,17 @@ class VerifyJWTToken
         try {
             \JWTAuth::parseToken()->authenticate();
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
+            $response = $this->apiErrorResponse('Token has expired');
+
+            return $response;
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
+            $response = $this->apiErrorResponse('Token is invalid');
+
+            return $response;
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
+            $response = $this->apiErrorResponse('Token unknown or not found');
+
+            return $response;
         }
 
         return $next($request);

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Api\Controllers\Auth;
 
-use App\User;
 use Validator;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Controllers\Controller;
+use App\Api\Controllers\ApiController;
 
-class LoginController extends Controller
+class LoginController extends ApiController
 {
     /**
      * Get a validator for an incoming login request.
@@ -33,19 +31,25 @@ class LoginController extends Controller
     protected function login(Request $request)
     {
         $validator = $this->validator($request->all());
-        
+
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()]);
+            $response = $this->apiErrorResponse($validator->errors());
+
+            return $response;
         }
-        
+
         try {
             if (!$token = \JWTAuth::attempt($request->all())) {
-                return response()->json(['error' => 'Invalid credentials'], 401);
+                $response = $this->apiErrorResponse('Invalid credentials');
+
+                return $response;
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
-        return response()->json(compact('token'));
+        $response = $this->apiResponse($token);
+
+        return $response;
     }
 }

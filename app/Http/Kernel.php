@@ -42,6 +42,6 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'jwt.auth' => \App\Http\Middleware\VerifyJWTToken::class,
+        'jwt.auth' => \App\Api\Middleware\VerifyJWTToken::class,
     ];
 }
