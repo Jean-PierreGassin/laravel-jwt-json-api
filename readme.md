@@ -17,3 +17,35 @@ A simple yet efficient Laravel + JWT API which responds according to [jsonapi.or
 2. Configure your .env appropriately for your environment
 
 3. You can find all routes in `routes.php` and send all API requests to `http://localhost:8081/api/`
+
+# Default routes
+---
+
+POST `http://localhost:8081/api/user/register`
+```
+{
+  "data": {
+    "type": "register",
+    "attributes": {
+      "name": "John Smith",
+      "email": "john.smith@gmail.com",
+      "password": "yourpassword"
+    }
+  }
+}
+```
+
+POST `http://localhost:8081/api/user/login`
+```
+{
+  "data": {
+    "type": "authenticate",
+    "attributes": {
+      "email": "john.smith@gmail.com",
+      "password": "yourpassword"
+    }
+  }
+}
+```
+
+GET `http://localhost:8081/api/me`
