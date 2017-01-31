@@ -10,7 +10,6 @@ A simple yet efficient Laravel + JWT API which responds according to [jsonapi.or
 ```
 
 # Installation
-
 ---
 
 1. (Optional) Install Docker + docker-compose and run `docker-compose up`
