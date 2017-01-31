@@ -6,7 +6,8 @@ A simple yet efficient Laravel + JWT API which responds according to [jsonapi.or
 ```
 "php": ">=5.6.4",
 "laravel/framework": "5.3.*",
-"tymon/jwt-auth": "^0.5.9"```
+"tymon/jwt-auth": "^0.5.9"
+```
 
 # Installation
 
