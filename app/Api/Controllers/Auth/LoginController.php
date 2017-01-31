@@ -30,7 +30,7 @@ class LoginController extends ApiController
      */
     protected function login(Request $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->input('data.attributes'));
 
         if ($validator->fails()) {
             $response = $this->apiErrorResponse($validator->errors());
@@ -39,7 +39,7 @@ class LoginController extends ApiController
         }
 
         try {
-            if (!$token = \JWTAuth::attempt($request->all())) {
+            if (!$token = \JWTAuth::attempt($request->input('data.attributes'))) {
                 $response = $this->apiErrorResponse('Invalid credentials');
 
                 return $response;

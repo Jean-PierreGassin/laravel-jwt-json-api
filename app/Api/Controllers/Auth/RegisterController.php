@@ -33,7 +33,7 @@ class RegisterController extends ApiController
      */
     protected function create(Request $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->input('data.attributes'));
 
         if ($validator->fails()) {
             $validatorErrors = $validator->errors()->all();
@@ -45,9 +45,9 @@ class RegisterController extends ApiController
 
         try {
             User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'name' => $request->input('data.attributes.name'),
+                'email' => $request->input('data.attributes.email'),
+                'password' => Hash::make($request->input('data.attributes.password')),
             ]);
         } catch (Exception $e) {
             $response = $this->apiErrorResponse($e->getMessage());
