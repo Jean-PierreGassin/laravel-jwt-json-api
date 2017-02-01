@@ -23,7 +23,7 @@ class RegisterController extends ApiController
      * @param  array  $data
      * @return response
      */
-    protected function create(Request $request)
+    protected function store(Request $request)
     {
         $validator = $this->validator->register($request->input('data.attributes'));
 

@@ -11,7 +11,7 @@ class UserDetailsController extends ApiController
      *
      * @return User
      */
-    protected function retrieve()
+    protected function index()
     {
         if (!$user = \JWTAuth::authenticate()) {
             $errors[] = $this->buildErrorObject(

@@ -12,11 +12,11 @@
 */
 
 Route::group(['prefix' => 'user'], function () {
-    Route::post('/register', 'Auth\RegisterController@create');
+    Route::resource('register', 'Auth\RegisterController');
 
-    Route::post('/login', 'Auth\LoginController@login');
+    Route::resource('login', 'Auth\LoginController');
 });
 
 Route::group(['middleware' => ['jwt.auth']], function () {
-    Route::get('/me', 'User\UserDetailsController@retrieve');
+    Route::resource('me', 'User\UserDetailsController');
 });

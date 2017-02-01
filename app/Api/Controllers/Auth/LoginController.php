@@ -21,7 +21,7 @@ class LoginController extends ApiController
      * @param  array  $data
      * @return response
      */
-    protected function login(Request $request)
+    protected function store(Request $request)
     {
         $validator = $this->validator->login($request->input('data.attributes'));
 
