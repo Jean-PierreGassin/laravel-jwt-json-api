@@ -131,10 +131,8 @@ class ApiController extends Controller
     /**
      * Builds data objects
      *
-     * @param string $title
-     * @param string $error
-     * @param string $path
-     * @param integer $statusCode
+     * @param string $type
+     * @param string/array $attributes
      * @return object
      */
     public function buildDataObject($type, $attributes)
