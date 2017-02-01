@@ -2,24 +2,17 @@
 
 namespace App\Api\Controllers\Auth;
 
-use Validator;
 use Illuminate\Http\Request;
+use App\Api\Validators\AuthValidator;
 use App\Api\Controllers\ApiController;
 
 class LoginController extends ApiController
 {
-    /**
-     * Get a validator for an incoming login request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    protected $validator;
+
+    public function __construct()
     {
-        return Validator::make($data, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $this->validator = new AuthValidator();
     }
 
     /**
@@ -30,7 +23,7 @@ class LoginController extends ApiController
      */
     protected function login(Request $request)
     {
-        $validator = $this->validator($request->input('data.attributes'));
+        $validator = $this->validator->login($request->input('data.attributes'));
 
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {
