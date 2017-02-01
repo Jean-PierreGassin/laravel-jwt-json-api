@@ -55,6 +55,10 @@ class ApiController extends Controller
      */
     public function parseItems($items)
     {
+        if (empty($items)) {
+            return $items;
+        }
+
         foreach ($items as $key => $value) {
             $responseItemsArray[$key] = $items[$key];
         }
@@ -70,6 +74,10 @@ class ApiController extends Controller
      */
     public function parseErrors($errors)
     {
+        if (empty($items)) {
+            return $items;
+        }
+        
         foreach ($errors as $key => $value) {
             $responseErrorsArray[] = (object) [
                 'detail' => $value,
