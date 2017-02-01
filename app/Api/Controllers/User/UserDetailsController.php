@@ -14,13 +14,19 @@ class UserDetailsController extends ApiController
     protected function retrieve()
     {
         if (!$user = \JWTAuth::authenticate()) {
-            $response = $this->apiErrorResponse('User not found');
+            $errors[] = $this->buildErrorObject(
+                'Unknown user',
+                'User lookup failed (couldn\'t find user)',
+                $request->path(),
+                404
+            );
 
-            return $response;
+            return $this->apiErrorResponse($errors);
         }
 
-        $response = $this->apiResponse($user->toArray());
 
-        return $response;
+        $data[] = $this->buildDataObject('user', $user->toArray());
+
+        return $this->apiResponse($data);
     }
 }

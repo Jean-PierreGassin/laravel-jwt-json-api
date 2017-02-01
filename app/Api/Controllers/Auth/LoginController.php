@@ -33,23 +33,42 @@ class LoginController extends ApiController
         $validator = $this->validator($request->input('data.attributes'));
 
         if ($validator->fails()) {
-            $response = $this->apiErrorResponse($validator->errors());
+            foreach ($validator->errors()->all() as $error) {
+                $errors[] = $this->buildErrorObject(
+                    'Validation failed',
+                    $error,
+                    $request->path(),
+                    500
+                );
+            }
 
-            return $response;
+            return $this->apiErrorResponse($errors);
         }
 
         try {
             if (!$token = \JWTAuth::attempt($request->input('data.attributes'))) {
-                $response = $this->apiErrorResponse('Invalid credentials');
+                $errors[] = $this->buildErrorObject(
+                    'Authorization failed',
+                    'Username or password is incorrect',
+                    $request->path(),
+                    500
+                );
 
-                return $response;
+                return $this->apiErrorResponse($errors);
             }
         } catch (JWTException $e) {
-            return $this->apiErrorResponse($e->getMessage());
+            $errors[] = $this->buildErrorObject(
+                'Unknown error',
+                $e->getMessage(),
+                $request->path(),
+                500
+            );
+
+            return $this->apiErrorResponse($errors);
         }
 
-        $response = $this->apiResponse($token);
+        $data[] = $this->buildDataObject('authtoken', ['token' => $token]);
 
-        return $response;
+        return $this->apiResponse($data);
     }
 }

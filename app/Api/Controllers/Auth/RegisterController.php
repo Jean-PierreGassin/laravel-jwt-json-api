@@ -36,11 +36,16 @@ class RegisterController extends ApiController
         $validator = $this->validator($request->input('data.attributes'));
 
         if ($validator->fails()) {
-            $validatorErrors = $validator->errors()->all();
+            foreach ($validator->errors()->all() as $error) {
+                $errors[] = $this->buildErrorObject(
+                    'Validation failed',
+                    $error,
+                    $request->path(),
+                    500
+                );
+            }
 
-            $response = $this->apiErrorResponse($validatorErrors);
-
-            return $response;
+            return $this->apiErrorResponse($errors);
         }
 
         try {
@@ -50,13 +55,16 @@ class RegisterController extends ApiController
                 'password' => Hash::make($request->input('data.attributes.password')),
             ]);
         } catch (Exception $e) {
-            $response = $this->apiErrorResponse($e->getMessage());
+            $errors[] = $this->buildErrorObject(
+                'Unknown error',
+                $e->getMessage(),
+                $request->path(),
+                500
+            );
 
-            return $response;
+            return $this->apiErrorResponse($errors);
         }
 
-        $response = $this->apiResponse('User created');
-
-        return $response;
+        return;
     }
 }

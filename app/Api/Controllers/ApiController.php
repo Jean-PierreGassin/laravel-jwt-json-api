@@ -16,24 +16,11 @@ class ApiController extends Controller
     {
         $items = (array) $items;
 
+        $response = $this->parseItems($items);
+
         return response()->json([
             'data' => $this->parseItems($items),
         ], 200);
-    }
-
-    /**
-     * Returns a JSON comliant unauthorized response
-     *
-     * @param array $error
-     * @return Illuminate\Http\Response
-     */
-    public function apiUnauthorizedResponse($errors)
-    {
-        $errors = (array) $errors;
-
-        return response()->json([
-            'errors' => $this->parseErrors($errors),
-        ], 401);
     }
 
     /**
@@ -46,9 +33,11 @@ class ApiController extends Controller
     {
         $errors = (array) $errors;
 
+        $response = $this->parseErrors($errors);
+
         return response()->json([
-            'errors' => $this->parseErrors($errors),
-        ], 400);
+            'errors' => $response,
+        ], $response[0]->status);
     }
 
     /**
@@ -63,8 +52,11 @@ class ApiController extends Controller
             return $items;
         }
 
-        foreach ($items as $key => $value) {
-            $responseItemsArray[$key] = $items[$key];
+        foreach ($items as $item) {
+            $responseObject = new \stdClass();
+            $objectErrors = $this->objectHasValidProperties($item, 'data');
+
+            $responseItemsArray[] = $item;
         }
 
         return $responseItemsArray;
@@ -79,16 +71,105 @@ class ApiController extends Controller
      */
     public function parseErrors($errors)
     {
-        if (empty($items)) {
-            return $items;
+        if (empty($errors)) {
+            return $errors;
         }
 
-        foreach ($errors as $key => $value) {
-            $responseErrorsArray[] = (object) [
-                'detail' => $value,
-            ];
+        $responseErrorsArray = [];
+
+        foreach ($errors as $error) {
+            $responseObject = new \stdClass();
+            $objectErrors = $this->objectHasValidProperties($error, 'error');
+
+            $responseErrorsArray[] = $error;
         }
 
         return $responseErrorsArray;
+    }
+
+    /**
+     * Validates api response objects to make sure they contain correct properties
+     *
+     * @param object $object
+     * @return boolean
+     */
+    public function objectHasValidProperties($object, $type)
+    {
+        $missingProperties = [];
+        $dataProperties = ['type', 'attributes'];
+        $errorProperties = ['status', 'source', 'title', 'detail'];
+
+        if ($type == 'data') {
+            foreach ($dataProperties as $property) {
+                if (!property_exists($object, $property)) {
+                    $missingProperties[] = $property;
+                }
+            }
+        }
+
+        if ($type == 'error') {
+            foreach ($errorProperties as $property) {
+                if (!property_exists($object, $property)) {
+                    $missingProperties[] = $property;
+                }
+            }
+        }
+
+        if (empty($missingProperties)) {
+            return true;
+        }
+
+        $responseObject = new \stdClass();
+        $responseObject->status = 500;
+        $responseObject->source = 'ApiController.php';
+        $responseObject->title = 'Invalid error object';
+        $responseObject->detail = 'Missing properties: ' . implode(', ', $missingProperties);
+
+        return $responseObject;
+    }
+
+    /**
+     * Builds data objects
+     *
+     * @param string $title
+     * @param string $error
+     * @param string $path
+     * @param integer $statusCode
+     * @return object
+     */
+    public function buildDataObject($type, $attributes)
+    {
+        $attributes = (array) $attributes;
+        $attributesObject = new \stdClass();
+
+        foreach ($attributes as $key => $value) {
+            $attributesObject->{$key} = $value;
+        }
+
+        $dataObject = new \stdClass();
+        $dataObject->type = $type;
+        $dataObject->attributes = $attributesObject;
+
+        return $dataObject;
+    }
+
+    /**
+     * Builds error objects
+     *
+     * @param string $title
+     * @param string $error
+     * @param string $path
+     * @param integer $statusCode
+     * @return object
+     */
+    public function buildErrorObject($title, $error, $path, $statusCode = 500)
+    {
+        $errorObject = new \stdClass();
+        $errorObject->title = $title;
+        $errorObject->detail = $error;
+        $errorObject->source = $path;
+        $errorObject->status = $statusCode;
+
+        return $errorObject;
     }
 }
