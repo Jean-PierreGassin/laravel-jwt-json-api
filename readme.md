@@ -49,3 +49,17 @@ POST `http://localhost:8081/api/user/login`
 ```
 
 GET `http://localhost:8081/api/me`
+```
+{
+  "data": [{
+    "type": "user",
+    "attributes": {
+      "id": 1,
+      "name": "Jean-Pierre",
+      "email": "jeanpierre.gassin@gmail.com",
+      "created_at": "2017-01-11 12:35:05",
+      "updated_at": "2017-01-11 12:35:05"
+    }
+  }]
+}
+```
