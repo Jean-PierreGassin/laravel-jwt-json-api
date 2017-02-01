@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
-    /*
+    /**
      * Returns a JSON compliant item(s) response
      *
-     * @param Array $item
+     * @param array $item
+     * @return Illuminate\Http\Response
      */
     public function apiResponse($items)
     {
@@ -20,10 +21,11 @@ class ApiController extends Controller
         ], 200);
     }
 
-    /*
+    /**
      * Returns a JSON comliant unauthorized response
      *
-     * @param Array $error
+     * @param array $error
+     * @return Illuminate\Http\Response
      */
     public function apiUnauthorizedResponse($errors)
     {
@@ -34,10 +36,11 @@ class ApiController extends Controller
         ], 401);
     }
 
-    /*
+    /**
      * Returns a JSON compliant error response
      *
-     * @param Array $error
+     * @param array $error
+     * @return Illuminate\Http\Response
      */
     public function apiErrorResponse($errors)
     {
@@ -48,10 +51,11 @@ class ApiController extends Controller
         ], 400);
     }
 
-    /*
+    /**
      * Formats a nice array of objects for our response
      *
-     * @param Array $items
+     * @param array $items
+     * @return array $responseItemsArray
      */
     public function parseItems($items)
     {
@@ -67,17 +71,18 @@ class ApiController extends Controller
     }
 
 
-    /*
+    /**
      * Formats a nice array of objects for our response
      *
-     * @param Array $errors
+     * @param array $errors
+     * @return array $responseErrorsArray
      */
     public function parseErrors($errors)
     {
         if (empty($items)) {
             return $items;
         }
-        
+
         foreach ($errors as $key => $value) {
             $responseErrorsArray[] = (object) [
                 'detail' => $value,
