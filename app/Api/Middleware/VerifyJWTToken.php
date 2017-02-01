@@ -20,23 +20,9 @@ class VerifyJWTToken extends ApiController
     {
         try {
             \JWTAuth::parseToken()->authenticate();
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+        } catch (JWTException $e) {
             $errors[] = $this->buildErrorObject(
-                'Token expired',
-                $e->getMessage(),
-                $request->path(),
-                500
-            );
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            $errors[] = $this->buildErrorObject(
-                'Token invalid',
-                $e->getMessage(),
-                $request->path(),
-                500
-            );
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            $errors[] = $this->buildErrorObject(
-                'Token unknown or not found',
+                'Authorization error',
                 $e->getMessage(),
                 $request->path(),
                 500
