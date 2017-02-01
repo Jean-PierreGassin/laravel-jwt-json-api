@@ -45,7 +45,7 @@ class LoginController extends ApiController
                 return $response;
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'Could not create token'], 500);
+            return $this->apiErrorResponse($e->getMessage());
         }
 
         $response = $this->apiResponse($token);
