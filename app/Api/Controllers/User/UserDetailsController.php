@@ -9,7 +9,7 @@ class UserDetailsController extends ApiController
     /**
      * Retrieve the currently authenticated user.
      *
-     * @return User
+     * @return Illuminate\Http\Response
      */
     protected function index()
     {

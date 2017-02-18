@@ -9,7 +9,7 @@ class AuthValidator
     /**
      * Validate an incoming registration request
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     public function register(array $data)
@@ -24,7 +24,7 @@ class AuthValidator
     /**
      * Validate an incoming login request
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     public function login(array $data)

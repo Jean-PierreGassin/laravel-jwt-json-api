@@ -20,8 +20,8 @@ class RegisterController extends ApiController
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return response
+     * @param array $data
+     * @return Illuminate\Http\Response
      */
     protected function store(Request $request)
     {

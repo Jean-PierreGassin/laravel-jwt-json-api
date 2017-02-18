@@ -18,8 +18,8 @@ class LoginController extends ApiController
     /**
      * Check a users credentials and log them in.
      *
-     * @param  array  $data
-     * @return response
+     * @param array $data
+     * @return Illuminate\Http\Response
      */
     protected function store(Request $request)
     {

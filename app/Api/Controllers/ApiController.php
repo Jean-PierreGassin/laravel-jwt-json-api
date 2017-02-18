@@ -91,7 +91,7 @@ class ApiController extends Controller
      * Validates api response objects to make sure they contain correct properties
      *
      * @param object $object
-     * @return boolean
+     * @return bool
      */
     public function objectHasValidProperties($object, $type)
     {
@@ -133,7 +133,7 @@ class ApiController extends Controller
      *
      * @param string $type
      * @param string/array $attributes
-     * @return object
+     * @return stdClass
      */
     public function buildDataObject($type, $attributes)
     {
@@ -158,7 +158,7 @@ class ApiController extends Controller
      * @param string $error
      * @param string $path
      * @param integer $statusCode
-     * @return object
+     * @return stdClass
      */
     public function buildErrorObject($title, $error, $path, $statusCode = 500)
     {
