@@ -6,10 +6,9 @@ use App\Api\Controllers\ApiController;
 
 class UserDetailsController extends ApiController
 {
+
     /**
-     * Retrieve the currently authenticated user.
-     *
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function index()
     {

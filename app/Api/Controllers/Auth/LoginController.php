@@ -5,6 +5,7 @@ namespace App\Api\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Api\Validators\AuthValidator;
 use App\Api\Controllers\ApiController;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends ApiController
 {
@@ -17,9 +18,8 @@ class LoginController extends ApiController
 
     /**
      * Check a users credentials and log them in.
-     *
-     * @param array $data
-     * @return Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function store(Request $request)
     {

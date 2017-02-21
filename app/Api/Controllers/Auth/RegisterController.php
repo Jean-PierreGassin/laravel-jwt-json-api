@@ -19,9 +19,8 @@ class RegisterController extends ApiController
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param array $data
-     * @return Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function store(Request $request)
     {
@@ -46,7 +45,7 @@ class RegisterController extends ApiController
                 'email' => $request->input('data.attributes.email'),
                 'password' => Hash::make($request->input('data.attributes.password')),
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors[] = $this->buildErrorObject(
                 'Unknown error',
                 $e->getMessage(),
@@ -57,6 +56,6 @@ class RegisterController extends ApiController
             return $this->apiErrorResponse($errors);
         }
 
-        return;
+        return $this->apiErrorResponse([]);
     }
 }

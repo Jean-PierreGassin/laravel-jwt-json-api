@@ -6,28 +6,24 @@ use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
+
     /**
-     * Returns a JSON compliant item(s) response
-     *
-     * @param array $item
-     * @return Illuminate\Http\Response
+     * @param $items
+     * @return \Illuminate\Http\JsonResponse
      */
     public function apiResponse($items)
     {
         $items = (array) $items;
-
-        $response = $this->parseItems($items);
 
         return response()->json([
             'data' => $this->parseItems($items),
         ], 200);
     }
 
+
     /**
-     * Returns a JSON compliant error response
-     *
-     * @param array $error
-     * @return Illuminate\Http\Response
+     * @param $errors
+     * @return \Illuminate\Http\JsonResponse
      */
     public function apiErrorResponse($errors)
     {
@@ -40,11 +36,10 @@ class ApiController extends Controller
         ], $response[0]->status);
     }
 
+
     /**
-     * Formats a nice array of objects for our response
-     *
-     * @param array $items
-     * @return array $responseItemsArray
+     * @param $items
+     * @return array
      */
     public function parseItems($items)
     {
@@ -52,10 +47,9 @@ class ApiController extends Controller
             return $items;
         }
 
-        foreach ($items as $item) {
-            $responseObject = new \stdClass();
-            $objectErrors = $this->objectHasValidProperties($item, 'data');
+        $responseItemsArray = [];
 
+        foreach ($items as $item) {
             $responseItemsArray[] = $item;
         }
 
@@ -64,10 +58,8 @@ class ApiController extends Controller
 
 
     /**
-     * Formats a nice array of objects for our response
-     *
-     * @param array $errors
-     * @return array $responseErrorsArray
+     * @param $errors
+     * @return array
      */
     public function parseErrors($errors)
     {
@@ -78,20 +70,17 @@ class ApiController extends Controller
         $responseErrorsArray = [];
 
         foreach ($errors as $error) {
-            $responseObject = new \stdClass();
-            $objectErrors = $this->objectHasValidProperties($error, 'error');
-
             $responseErrorsArray[] = $error;
         }
 
         return $responseErrorsArray;
     }
 
+
     /**
-     * Validates api response objects to make sure they contain correct properties
-     *
-     * @param object $object
-     * @return bool
+     * @param $object
+     * @param $type
+     * @return bool|\stdClass
      */
     public function objectHasValidProperties($object, $type)
     {
@@ -128,12 +117,11 @@ class ApiController extends Controller
         return $responseObject;
     }
 
+
     /**
-     * Builds data objects
-     *
-     * @param string $type
-     * @param string/array $attributes
-     * @return stdClass
+     * @param $type
+     * @param $attributes
+     * @return \stdClass
      */
     public function buildDataObject($type, $attributes)
     {
@@ -151,14 +139,13 @@ class ApiController extends Controller
         return $dataObject;
     }
 
+
     /**
-     * Builds error objects
-     *
-     * @param string $title
-     * @param string $error
-     * @param string $path
-     * @param integer $statusCode
-     * @return stdClass
+     * @param $title
+     * @param $error
+     * @param $path
+     * @param int $statusCode
+     * @return \stdClass
      */
     public function buildErrorObject($title, $error, $path, $statusCode = 500)
     {
