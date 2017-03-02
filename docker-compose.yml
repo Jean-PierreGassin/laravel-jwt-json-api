@@ -5,22 +5,18 @@ services:
     image: nginx:latest
     ports:
       - "80:80"
-    volumes_from:
-      - data
+    volumes:
+      - ./:/app
+      - ./site.conf:/etc/nginx/conf.d/default.conf
     links:
       - php
     environment:
       DEBUG: 'true'
 
-  data:
-    volumes:
-      - ./:app
-      - ./site.conf:/etc/nginx/conf.d/default.conf
-
   php:
     build: ./
-    volumes_from:
-      - data
+    volumes:
+      - ./:/app
     links:
       - database
 
