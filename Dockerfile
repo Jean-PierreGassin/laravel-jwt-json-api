@@ -8,6 +8,9 @@ FROM composer/composer
 # Insert application code
 ADD ./ /app
 
+# Disable Firewalld (nginx can't talk to php fpm?)
+RUN systemctl stop firewalld
+
 # Install composer dependencies
 RUN composer self-update
 RUN composer global require "hirak/prestissimo:^0.3"
