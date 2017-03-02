@@ -6,7 +6,6 @@ RUN docker-php-ext-install pdo pdo_mysql
 FROM composer/composer
 
 # Insert application code
-RUN rm -rf /app
 ADD ./ /app
 
 # Install composer dependencies
