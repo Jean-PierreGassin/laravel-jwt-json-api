@@ -31,5 +31,4 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN composer global require "hirak/prestissimo:^0.3"
 
 # Install Composer dependencies
-RUN composer self-update
-RUN cd /app && composer install
+CMD ./composer-install.sh
