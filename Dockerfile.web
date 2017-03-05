@@ -1,0 +1,6 @@
+# Install nginx from image
+FROM nginx:latest
+
+MAINTAINER Jean-Pierre Gassin <jeanpierre.gassin@gmail.com>
+
+COPY ./site.conf /etc/nginx/conf.d/default.conf

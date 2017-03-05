@@ -27,6 +27,9 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 
-# Install composer dependencies
+# Faster Composer installs
+RUN composer global require "hirak/prestissimo:^0.3"
+
+# Install Composer dependencies
 RUN composer self-update
 RUN composer update -d /app
