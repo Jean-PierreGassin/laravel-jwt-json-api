@@ -32,4 +32,4 @@ RUN composer global require "hirak/prestissimo:^0.3"
 
 # Install Composer dependencies
 RUN composer self-update
-RUN composer update -d /app
+RUN cd /app && composer install
