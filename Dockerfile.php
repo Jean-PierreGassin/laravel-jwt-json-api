@@ -32,4 +32,5 @@ RUN composer global require "hirak/prestissimo:^0.3"
 
 # Install Composer dependencies
 ADD composer-install.sh .
+RUN chmod +x ./composer-install.sh
 CMD ./composer-install.sh
