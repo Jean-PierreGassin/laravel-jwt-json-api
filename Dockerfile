@@ -4,7 +4,7 @@ RUN docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Setup updates for our OS
 RUN apt-get update \
-&& apt-get install -y supervisor unattended-upgrades \
+&& apt-get install -y supervisor unattended-upgrades zlib1g-dev \
 && rm -rf /var/lib/apt/lists/*
 
 # Insert application code
