@@ -16,8 +16,8 @@ services:
       dockerfile: Dockerfile.web
     ports:
       - "80:80"
-    volumes:
-      - ./:/app
+    volumes_from:
+      - php
     links:
       - php
 
