@@ -1,11 +1,11 @@
-# PHP + PHP FPM + Extensions
-FROM php:7-fpm
-RUN docker-php-ext-install pdo pdo_mysql mbstring zip
-
 # Setup updates for our OS
 RUN apt-get update \
 && apt-get install -y supervisor unattended-upgrades zlib1g-dev \
 && rm -rf /var/lib/apt/lists/*
+
+# PHP + PHP FPM + Extensions
+FROM php:7-fpm
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Insert application code
 ADD ./ /app
