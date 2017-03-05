@@ -2,6 +2,11 @@
 FROM php:7-fpm
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Setup updates for our OS
+RUN apt-get update \
+&& apt-get install -y supervisor unattended-upgrades \
+&& rm -rf /var/lib/apt/lists/*
+
 # Insert application code
 ADD ./ /app
 
@@ -13,5 +18,4 @@ RUN mv composer.phar /usr/local/bin/composer
 
 # Install composer dependencies
 RUN composer self-update
-RUN composer global require "hirak/prestissimo:^0.3"
 RUN composer update -d /app
