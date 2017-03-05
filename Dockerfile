@@ -1,6 +1,6 @@
 # PHP + PHP FPM + Extensions
 FROM php:7-fpm
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Setup updates for our OS
 RUN apt-get update \
