@@ -29,3 +29,4 @@ services:
       MYSQL_DATABASE: json_api
       MYSQL_USER: api_user
       MYSQL_PASSWORD: 4[TUW7z3>QG9(Yh38,Wjsw
+      MYSQL_ROOT_PASSWORD: 4[zsdq23>QG9(Yh38,zsda
