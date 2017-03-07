@@ -1,28 +1,26 @@
-# About
+# Laravel + JWT API
+[![Build Status](https://travis-ci.org/Jean-PierreGassin/laravel-jwt-json-api.svg?branch=master)](https://travis-ci.org/Jean-PierreGassin/laravel-jwt-json-api)
 
-A simple yet efficient Laravel + JWT API which responds according to [jsonapi.org](http://jsonapi.org/) standards.
+## About
 
-You can test the below endpoints here http://128.199.131.210/
+A simple yet efficient Laravel + JWT API which responds according to [jsonapi.org](http://jsonapi.org/) standards. 
+Demo available @ http://128.199.131.210
 
-# Dependencies
+## Dependencies
 ```
 "php": ">=5.6.4",
 "laravel/framework": "5.4.*",
 "tymon/jwt-auth": "^0.5.9"
 ```
 
-# Installation
----
-
+## Installation
 1. (Optional) Install Docker + docker-compose and run `docker-compose up`
 
 2. Configure your .env appropriately for your environment
 
 3. You can find all routes in `routes.php` and send all API requests to `http://localhost/api/`
 
-# Default routes
----
-
+## Default routes
 POST `http://localhost/api/user/register`
 ```
 {
