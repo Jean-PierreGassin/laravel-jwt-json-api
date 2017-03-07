@@ -1,4 +1,4 @@
-# Laravel + JWT API
+# Laravel JWT + JSON API
 [![Build Status](https://travis-ci.org/Jean-PierreGassin/laravel-jwt-json-api.svg?branch=master)](https://travis-ci.org/Jean-PierreGassin/laravel-jwt-json-api)
 
 ## About
