@@ -2,6 +2,8 @@
 
 A simple yet efficient Laravel + JWT API which responds according to [jsonapi.org](http://jsonapi.org/) standards.
 
+You can test the below endpoints here http://128.199.131.210/
+
 # Dependencies
 ```
 "php": ">=5.6.4",
