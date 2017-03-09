@@ -26,7 +26,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: json_api
-      MYSQL_USER: api_user
-      MYSQL_PASSWORD: 4[TUW7z3>QG9(Yh38,Wjsw
-      MYSQL_ROOT_PASSWORD: 4[zsdq23>QG9(Yh38,zsda
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+      MYSQL_ROOT_PASSWORD: my_password
