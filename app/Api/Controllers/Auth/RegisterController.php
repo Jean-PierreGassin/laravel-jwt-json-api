@@ -56,6 +56,6 @@ class RegisterController extends ApiController
             return $this->apiErrorResponse($errors);
         }
 
-        return $this->apiErrorResponse([]);
+        return $this->apiResponse([]);
     }
 }
