@@ -2,10 +2,27 @@
 
 namespace App\Api\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fourOhFour(Request $request)
+    {
+        $errors[] = $this->buildErrorObject(
+            'Four oh Four',
+            'I couldn\'t seem to find this route...',
+            $request->path(),
+            404
+        );
+
+        return $this->apiErrorResponse($errors);
+    }
 
     /**
      * @param $items
@@ -13,7 +30,7 @@ class ApiController extends Controller
      */
     public function apiResponse($items)
     {
-        $items = (array) $items;
+        $items = (array)$items;
 
         return response()->json([
             'data' => $this->parseItems($items),
@@ -27,7 +44,7 @@ class ApiController extends Controller
      */
     public function apiErrorResponse($errors)
     {
-        $errors = (array) $errors;
+        $errors = (array)$errors;
 
         $response = $this->parseErrors($errors);
 
@@ -125,7 +142,7 @@ class ApiController extends Controller
      */
     public function buildDataObject($type, $attributes)
     {
-        $attributes = (array) $attributes;
+        $attributes = (array)$attributes;
         $attributesObject = new \stdClass();
 
         foreach ($attributes as $key => $value) {
