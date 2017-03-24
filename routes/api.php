@@ -20,3 +20,5 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('me', 'User\UserDetailsController');
 });
+
+Route::any('{all}', 'ApiController@fourOhFour')->where('all', '.*');
