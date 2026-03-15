@@ -1,5 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Api\Controllers\Auth\LoginController;
+use App\Api\Controllers\Auth\RegisterController;
+use App\Api\Controllers\User\UserDetailsController;
+use App\Api\Controllers\ApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,14 +17,13 @@
 |
 */
 
-Route::group(['prefix' => 'user'], function () {
-    Route::resource('register', 'Auth\RegisterController');
-
-    Route::resource('login', 'Auth\LoginController');
+Route::prefix('user')->group(function () {
+    Route::post('register', [RegisterController::class, 'store']);
+    Route::post('login', [LoginController::class, 'store']);
 });
 
-Route::group(['middleware' => ['jwt.auth']], function () {
-    Route::resource('me', 'User\UserDetailsController');
+Route::middleware([\App\Api\Middleware\VerifyJWTToken::class])->group(function () {
+    Route::get('me', [UserDetailsController::class, 'index']);
 });
 
-Route::any('{all}', 'ApiController@fourOhFour')->where('all', '.*');
+Route::any('{all}', [ApiController::class, 'fourOhFour'])->where('all', '.*');

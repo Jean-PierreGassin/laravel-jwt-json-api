@@ -22,7 +22,7 @@ class RegisterController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function store(Request $request)
+    public function store(Request $request)
     {
         $validator = $this->validator->register($request->input('data.attributes'));
 

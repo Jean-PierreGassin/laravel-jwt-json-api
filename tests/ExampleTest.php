@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests;
 
-class ExampleTest extends \TestCase
+class ExampleTest extends TestCase
 {
     /**
      * A basic functional test example.

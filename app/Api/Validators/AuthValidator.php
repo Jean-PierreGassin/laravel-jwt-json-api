@@ -2,7 +2,7 @@
 
 namespace App\Api\Validators;
 
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class AuthValidator
 {

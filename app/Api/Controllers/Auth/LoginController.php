@@ -5,6 +5,7 @@ namespace App\Api\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Api\Validators\AuthValidator;
 use App\Api\Controllers\ApiController;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends ApiController
@@ -21,7 +22,7 @@ class LoginController extends ApiController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function store(Request $request)
+    public function store(Request $request)
     {
         $validator = $this->validator->login($request->input('data.attributes'));
 
@@ -39,7 +40,7 @@ class LoginController extends ApiController
         }
 
         try {
-            if (!$token = \JWTAuth::attempt($request->input('data.attributes'))) {
+            if (!$token = JWTAuth::attempt($request->input('data.attributes'))) {
                 $errors[] = $this->buildErrorObject(
                     'Authorization failed',
                     'Username or password is incorrect',

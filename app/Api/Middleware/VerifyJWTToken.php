@@ -3,8 +3,10 @@
 namespace App\Api\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use App\Api\Controllers\ApiController;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class VerifyJWTToken extends ApiController
 {
@@ -16,10 +18,12 @@ class VerifyJWTToken extends ApiController
      * @param string|null $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
+        $errors = [];
+
         try {
-            \JWTAuth::parseToken()->authenticate();
+            JWTAuth::parseToken()->authenticate();
         } catch (JWTException $e) {
             $errors[] = $this->buildErrorObject(
                 'Authorization error',
