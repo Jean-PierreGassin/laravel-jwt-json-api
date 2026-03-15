@@ -26,9 +26,8 @@ return [
     'blacklist_grace_period' => env('JWT_BLACKLIST_GRACE_PERIOD', 0),
 
     'providers' => [
-        'user' => Tymon\JWTAuth\Providers\User\EloquentUserAdapter::class,
         'jwt' => Tymon\JWTAuth\Providers\JWT\Lcobucci::class,
-        'auth' => Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter::class,
-        'storage' => Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter::class,
+        'auth' => Tymon\JWTAuth\Providers\Auth\Illuminate::class,
+        'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
     ],
 ];
